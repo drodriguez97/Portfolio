@@ -45,7 +45,7 @@ export default class Room {
 
         this.scene.add(this.actualRoom);
         this.actualRoom.scale.set(.6, .6,.6)
-        this.actualRoom.rotation.y = Math.PI / 2;
+        //this.actualRoom.rotation.y = Math.PI / 2;
     }
 
     onMouseMove() {
