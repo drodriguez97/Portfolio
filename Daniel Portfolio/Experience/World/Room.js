@@ -6,13 +6,21 @@ import { RectAreaLightHelper } from "three/examples/jsm/helpers/RectAreaLightHel
 export default class Room {
     constructor() {
         this.experience = new Experience();
-        this.sizes = this.experience.sizes;
         this.scene = this.experience.scene;
         this.resources = this.experience.resources;
+        this.time = this.experience.time;
         this.room = this.resources.items.room;
         this.actualRoom = this.room.scene;
 
-        this.setModel();   
+        this.lerp = {
+            current: 0,
+            target: 0,
+            ease: 0.1,
+        };
+
+        this.setModel();
+        this.onMouseMove();
+
     }
 
     setModel() {
@@ -21,7 +29,7 @@ export default class Room {
             child.recieveShadow = true;
 
             if(child instanceof THREE.Group) {
-                child.children.forEach((groupchild)=>{
+                child.children.forEach((groupchild) => {
                     groupchild.castShadow = true;
                     groupchild.recieveShadow = true;
                 });
@@ -40,7 +48,23 @@ export default class Room {
         this.actualRoom.rotation.y = Math.PI / 2;
     }
 
+    onMouseMove() {
+        window.addEventListener("mousemove", (e)=>{
+            this.rotation =
+                ((e.clientX - window.innerWidth / 2) * 2) / window.innerWidth;
+            this.lerp.target = this.rotation * 0.05;
+        });
+    }
+
     resize() {}
 
-    update() {}
+    update() {
+        this.lerp.current = GSAP.utils.interpolate(
+            this.lerp.current,
+            this.lerp.target,
+            this.lerp.ease
+        );
+
+        this.actualRoom.rotation.y = this.lerp.current;
+    }
 }
