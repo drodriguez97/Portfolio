@@ -44,7 +44,7 @@ export default class Room {
         });
 
         this.scene.add(this.actualRoom);
-        this.actualRoom.scale.set(.7,.7,.7)
+        this.actualRoom.scale.set(.6, .6,.6)
         this.actualRoom.rotation.y = Math.PI / 2;
     }
 
@@ -52,7 +52,7 @@ export default class Room {
         window.addEventListener("mousemove", (e)=>{
             this.rotation =
                 ((e.clientX - window.innerWidth / 2) * 2) / window.innerWidth;
-            this.lerp.target = this.rotation * 0.05;
+            this.lerp.target = this.rotation * .7;
         });
     }
 
