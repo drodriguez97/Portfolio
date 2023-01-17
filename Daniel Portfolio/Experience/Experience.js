@@ -10,6 +10,7 @@ import Theme from "./Theme.js";
 import Renderer from "./Renderer.js";
 
 import World from "./World/World.js";
+import Controls from "./World/Controls.js";
 
 export default class Experience {
     static instance;
@@ -23,11 +24,11 @@ export default class Experience {
         this.time = new Time();
         this.sizes = new Sizes();
         this.camera = new Camera();
-        this.theme = new Theme();
         this.renderer = new Renderer();
         this.resources = new Resources(assets);
+        this.theme = new Theme();
         this.world = new World();
-
+        
         this.sizes.on("resize", () => {
             this.resize();
         });

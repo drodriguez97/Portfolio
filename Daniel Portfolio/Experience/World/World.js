@@ -16,21 +16,29 @@ export default class World extends EventEmitter {
         this.canvas = this.experience.canvas;
         this.camera = this.experience.camera;
         this.resources = this.experience.resources;
-        //this.theme = this.experience.theme;
+        this.theme = this.experience.theme;
 
         this.resources.on("ready", () => {
             this.environment = new Environment();
-            this.floor = new Floor();
             this.room = new Room();
+            this.floor = new Floor();
             this.controls = new Controls();
             this.emit("worldready");
+        });
+
+        this.theme.on("switch", (theme) => {
+            this.switchTheme(theme);
         });
         
         // this.sizes.on("switchdevice", (device) => {
         //     this.switchDevice(device);
         // });
     }
-
+    switchTheme(theme) {
+        if (this.environment) {
+            this.environment.switchTheme(theme);
+        }
+    }
     // switchDevice(device) {
     //     if (this.controls) {
     //         this.controls.switchDevice(device);
@@ -40,11 +48,11 @@ export default class World extends EventEmitter {
     resize() {}
 
     update() {
-        if (this.room) {
-            this.room.update();
-        }
-        if (this.controls) {
-            this.controls.update();
-        }
+        // if (this.room) {
+        //     this.room.update();
+        // }
+        // if (this.controls) {
+        //     this.controls.update();
+        // }
     }
 }
