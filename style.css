@@ -199,7 +199,7 @@ svg{
 
 .section{
   width: 50%;
-  padding: 200px 4%;
+  padding: 300px 4%;
   border-radius: 20px;
   margin: 0;
   background-color: var(--color-matcha);
@@ -229,13 +229,13 @@ svg{
   font-size: 18px;
   font-weight: 700;
   line-height: 1.8;
-  margin-top: 64px;
+  margin-top: 50px;
   color: var(--color-text);
 }
 
 .section-text {
   line-height: 2;
-  margin-top: 15px;
+  margin-top: 10px;
   font-size: 16px;
   color: var(--color-text);
 }
@@ -286,6 +286,13 @@ svg{
   right: 0;
   color:var(--color-text);
   font-size: 18px;
+}
+
+a {
+  line-height: 2;
+  margin-top: 15px;
+  font-size: 16px;
+  color: var(--color-text);
 }
 /* Hero section -------------------------------- */
 
