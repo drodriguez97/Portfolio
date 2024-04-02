@@ -272,7 +272,7 @@ export default class Controls {
                             trigger: section,
                             start: "top top",
                             end: "bottom bottom",
-                            scrub: 0.4,
+                            scrub: 0.6,
                             pin: this.progressWrapper,
                             pinSpacing: false,
                         },
@@ -333,27 +333,8 @@ export default class Controls {
                     y: 3,
                     z: 3,
                 });
-
-                // Mini Platform Animations
-                this.secondPartTimeline = new GSAP.timeline({
-                    scrollTrigger: {
-                        trigger: ".third-move",
-                        start: "center center",
-                    },
-                });
-
-                this.secondPartTimeline.add(this.first);
-                this.secondPartTimeline.add(this.second);
-                this.secondPartTimeline.add(this.third);
-                this.secondPartTimeline.add(this.fourth, "-=0.2");
-                this.secondPartTimeline.add(this.fifth, "-=0.2");
-                this.secondPartTimeline.add(this.sixth, "-=0.2");
-                this.secondPartTimeline.add(this.seventh, "-=0.2");
-                this.secondPartTimeline.add(this.eighth);
-                this.secondPartTimeline.add(this.ninth, "-=0.1");
             },
-        });
-        
+        }); 
     }
 
     resize() {}
