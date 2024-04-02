@@ -15,6 +15,33 @@ export default class Preloader extends EventEmitter {
         this.world.on("worldready", () => {
             this.playIntro();
         });
+
+        window.addEventListener('scroll', this.handleScroll.bind(this));
+
+        this.scrollTimeout = null;
+    }
+
+    handleScroll() {
+
+        // If timeout is active, clear it and mark it as inactive
+        if (this.isTimeoutActive) {
+            clearTimeout(this.scrollTimeout);
+            this.isTimeoutActive = false;
+        }
+
+        // Set timeout to hide the arrow after 3 seconds of not scrolling
+        this.scrollTimeout = setTimeout(() => {
+            this.hideArrow();
+            this.isTimeoutActive = false; // Reset the flag after hiding the arrow
+        }, 3000);
+    }
+
+    showArrow() {
+        document.querySelector('.arrow-svg-wrapper').style.opacity = 1;
+    }
+
+    hideArrow() {
+        document.querySelector('.arrow-svg-wrapper').style.opacity = 0;
     }
 
     firstIntro() {
@@ -31,11 +58,6 @@ export default class Preloader extends EventEmitter {
                 },
             }); 
             this.timeline
-                .to(".intro-text .animatedis", {
-                    yPercent: 0,
-                    stagger: 0.05,
-                    ease: "back.out(1.7)",
-                })
                 .to(
                     ".arrow-svg-wrapper",
                     {
