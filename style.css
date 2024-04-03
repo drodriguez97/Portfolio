@@ -245,10 +245,10 @@ svg{
 }
 
 .section-heading {
-  font-size: 18px;
-  font-weight: 700;
-  line-height: 1.8;
-  margin-top: 50px;
+  font-size: 24px;
+  font-weight: 600;
+  margin-top: 30px;
+
   color: var(--color-text);
 }
 
@@ -257,9 +257,9 @@ svg{
 }
 
 .section-text {
-  line-height: 2;
-  margin-top: 10px;
-  font-size: 16px;
+  line-height: 1.8;
+  margin-top: 15px;
+  font-size: 18px;
   color: var(--color-text);
 }
 
@@ -293,6 +293,7 @@ svg{
 /* Decoration Part of Section */
 .section-title {
   position: relative;
+  display:inline-block;
 }
 
 .section-title-text{
@@ -337,6 +338,13 @@ svg{
   color:var(--color-text);
   font-size: 18px;
 }
+
+.section-text a {
+  color: var(--color-black);
+  font-weight: bold; 
+  text-decoration: none;
+}
+
 
 a {
   line-height: 2;
