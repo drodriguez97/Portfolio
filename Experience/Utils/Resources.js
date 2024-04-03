@@ -9,6 +9,7 @@ export default class Resources extends EventEmitter {
         super();
         this.experience = new Experience();
         this.renderer = this.experience.renderer;
+        console.log(this.renderer)
 
         this.assets = assets;
 
@@ -21,17 +22,20 @@ export default class Resources extends EventEmitter {
     }
 
     setLoaders() {
+        this.renderer = this.experience.renderer;
         this.loaders = {};
         this.loaders.gltfLoader = new GLTFLoader();
         this.loaders.dracoLoader = new DRACOLoader();
         this.loaders.dracoLoader.setDecoderPath("/draco/");
         this.loaders.gltfLoader.setDRACOLoader(this.loaders.dracoLoader);
     }
+
     startLoading() {
         const promises = this.assets.map(asset => {
             return new Promise(resolve => {
                 if (asset.type === "glbModel") {
                     this.loaders.gltfLoader.load(asset.path, (file) => {
+                        console.log(file)
                         resolve({ name: asset.name, file });
                     });
                 } else if (asset.type === "videoTexture") {

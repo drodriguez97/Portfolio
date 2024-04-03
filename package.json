@@ -15,5 +15,9 @@
     "lil-gui": "^0.17.0",
     "three": "^0.148.0",
     "vite": "^4.0.0"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   }
 }
