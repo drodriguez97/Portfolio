@@ -1,5 +1,4 @@
 import * as THREE from "three";
-
 import { EventEmitter } from "events";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js"; 
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
@@ -29,39 +28,46 @@ export default class Resources extends EventEmitter {
         this.loaders.gltfLoader.setDRACOLoader(this.loaders.dracoLoader);
     }
     startLoading() {
-        for (const asset of this.assets) {
-            if (asset.type === "glbModel") {
-                this.loaders.gltfLoader.load(asset.path, (file) => {
-                    this.singleAssetLoaded(asset, file);
-                });
-            } else if (asset.type === "videoTexture") {
-                this.video = {};
-                this.videoTexture = {};
+        const promises = this.assets.map(asset => {
+            return new Promise(resolve => {
+                if (asset.type === "glbModel") {
+                    this.loaders.gltfLoader.load(asset.path, (file) => {
+                        resolve({ name: asset.name, file });
+                    });
+                } else if (asset.type === "videoTexture") {
+                    resolve({ name: asset.name, file: this.loadVideoTexture(asset) });
+                }
+            });
+        });
 
-                this.video[asset.name] = document.createElement("video");
-                this.video[asset.name].src = asset.path;
-                this.video[asset.name].muted = true;
-                this.video[asset.name].playsInline = true;
-                this.video[asset.name].autoplay = true;
-                this.video[asset.name].loop = true;
-                this.video[asset.name].play();
+        Promise.all(promises).then(loadedAssets => {
+            loadedAssets.forEach(({ name, file }) => {
+                this.singleAssetLoaded({ name, file });
+            });
+        });
+    }
+        
+    loadVideoTexture(asset) {
+        const video = document.createElement("video");
+        video.src = asset.path;
+        video.muted = true;
+        video.playsInline = true;
+        video.autoplay = true;
+        video.loop = true;
+        video.play();
 
-                this.videoTexture[asset.name] = new THREE.VideoTexture(
-                    this.video[asset.name]
-                );
-                this.videoTexture[asset.name].flipY = false;
-                this.videoTexture[asset.name].minFilter = THREE.NearestFilter;
-                this.videoTexture[asset.name].magFilter = THREE.NearestFilter;
-                this.videoTexture[asset.name].generateMipmaps = false;
-                this.videoTexture[asset.name].encoding = THREE.sRGBEncoding;
+        const videoTexture = new THREE.VideoTexture(video);
+        videoTexture.flipY = false;
+        videoTexture.minFilter = THREE.NearestFilter;
+        videoTexture.magFilter = THREE.NearestFilter;
+        videoTexture.generateMipmaps = false;
+        videoTexture.encoding = THREE.sRGBEncoding;
 
-                this.singleAssetLoaded(asset, this.videoTexture[asset.name]);
-            }
-        }
+        return videoTexture;
     }
 
-    singleAssetLoaded(asset, file) {
-        this.items[asset.name] = file;
+    singleAssetLoaded(asset) {
+        this.items[asset.name] = asset.file;
         this.loaded++;
         
         if (this.loaded === this.queue) {
