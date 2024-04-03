@@ -105,7 +105,11 @@ export default class Controls {
                             return this.sizes.width * 0.0020;
                         },
                     }
-                );
+                ).to(this.room.scale, {
+                    x: 0.5,
+                    y: 0.5,
+                    z: 0.5,
+                });
 
                 // Second section -----------------------------------------
                 this.secondMoveTimeline = new GSAP.timeline({
