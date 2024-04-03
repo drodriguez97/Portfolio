@@ -102,7 +102,10 @@ export default class Controls {
                     { x: 0, y: 0, z: 0 },
                     {
                         x: () => {
-                            return this.sizes.width * 0.0020;
+                            return 2.5;
+                        },
+                        z: () => {
+                            return this.sizes.height * 0.00005;
                         },
                     }
                 ).to(this.room.scale, {
@@ -153,7 +156,7 @@ export default class Controls {
                         invalidateOnRefresh: true,
                     },
                 }).to(this.camera.orthographicCamera.position, {
-                    y: 7,
+                    y: 6.5,
                     x: -5,
                 });
             },
